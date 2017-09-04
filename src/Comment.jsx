@@ -21,40 +21,29 @@ const client = new ApolloClient({
   networkInterface: networkInterface,
 });
 
-const listQuery = gql`
-query {
-  viewer {
-    gists(first: 1) {
-      edges {
-        node {
-          id
-        }
-      }
-    }
+const addCommentQuery = gql`
+mutation addComment {
+  addComment(input: { body: "test comment with Apollo!", subjectId: "MDExOlB1bGxSZXF1ZXN0MTM3MzkyMzg5"}) {
+    clientMutationId
   }
 }
 `;
 
-const ListItem = ({ data: { viewer, loading, error } }) => {
-    if (loading) {
-      return <div>loading...</div>;
-    }
-    if (error) {
-      return <div>error!</div>;
-    }
-    return <div>{viewer.gists.edges[0].node.id}</div>;
+const dummyItem = ({ mutate }) => {
+  mutate()
+  return null
 }
 
-const ListItemWithData = graphql(listQuery)(ListItem);
+const Mutate = graphql(addCommentQuery)(dummyItem);
 
-class List extends React.Component {
+class MutateComponent extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <ListItemWithData />
+        <Mutate />
       </ApolloProvider>
     )
   }
 }
 
-export default List;
+export default MutateComponent;

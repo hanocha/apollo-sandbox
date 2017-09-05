@@ -37,7 +37,10 @@ const store = createStore(
     apollo: client.reducer(),
   }),
   {},
-  compose(applyMiddleware(client.middleware()))
+  compose(
+    applyMiddleware(client.middleware()),
+    (typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined') ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
+  )
 );
 
 ReactDOM.render(

@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import List from '../components/List'
 
 import {
@@ -6,28 +5,23 @@ import {
   graphql,
 } from 'react-apollo'
 
-const listQuery = graphql(gql`
-query {
+const listQuery = gql`
+query repositoryList($count: Int!) {
   viewer {
-    gists(first: 1) {
+    repositories(first: $count) {
       edges {
         node {
+          name,
           id
         }
       }
     }
   }
 }
-`);
+`;
 
-const ListWithData = listQuery(List);
-
-const mapStateToProps = state => {
-  return {
-    nodes: state.nodes
-  }
-}
-
-const ListContainer = connect(mapStateToProps)(ListWithData);
+const ListContainer = graphql(listQuery, {
+  options: { variables: { count: 5 } },
+})(List);
 
 export default ListContainer;

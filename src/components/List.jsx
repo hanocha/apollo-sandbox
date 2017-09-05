@@ -1,11 +1,17 @@
 import React from 'react';
-import GistItem from './GistItem'
+import ListItem from './ListItem'
 
 const List = ({ data: { viewer, loading, error } }) => {
   if (loading) {
     return <div>loading...</div>;
   }
-  return <GistItem node={viewer.gists.edges[0].node} />
+  return (
+    <div>
+      {viewer.repositories.edges.map((edge, index) => {
+        return <ListItem key={index} node={edge.node} />
+      })}
+    </div>
+  );
 };
 
 export default List;

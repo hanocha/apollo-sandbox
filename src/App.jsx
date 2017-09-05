@@ -46,7 +46,7 @@ const store = createStore(
 ReactDOM.render(
   <div>
     <ApolloProvider store={store} client={client}>
-      <ListContainer />
+      <ListContainer count={4}/>
     </ApolloProvider>
   </div>,
   mountNode

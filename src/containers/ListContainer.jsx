@@ -21,7 +21,7 @@ query repositoryList($count: Int!) {
 `;
 
 const ListContainer = graphql(listQuery, {
-  options: { variables: { count: 5 } },
+  options: ({ count }) => ({ variables: { count } }),
 })(List);
 
 export default ListContainer;

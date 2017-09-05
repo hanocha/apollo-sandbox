@@ -15,6 +15,7 @@ import {
 } from 'react-apollo';
 
 import ListContainer from './containers/ListContainer';
+import Button from './components/Button'
 
 const mountNode = document.getElementById('root');
 
@@ -43,11 +44,20 @@ const store = createStore(
   )
 );
 
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <ListContainer count={4} />
+        <Button text="mutate" />
+      </div>
+    )
+  }
+}
+
 ReactDOM.render(
-  <div>
-    <ApolloProvider store={store} client={client}>
-      <ListContainer count={4}/>
-    </ApolloProvider>
-  </div>,
+  <ApolloProvider store={store} client={client}>
+    <App />
+  </ApolloProvider>,
   mountNode
 );

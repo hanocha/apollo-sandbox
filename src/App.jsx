@@ -15,7 +15,8 @@ import {
 } from 'react-apollo';
 
 import ListContainer from './containers/ListContainer';
-import Button from './components/Button'
+import CommentButton from './containers/CommentButton'
+import app from './reducers'
 
 const mountNode = document.getElementById('root');
 
@@ -35,6 +36,7 @@ const client = new ApolloClient({
 
 const store = createStore(
   combineReducers({
+    app: app,
     apollo: client.reducer(),
   }),
   {},
@@ -49,7 +51,7 @@ class App extends React.Component {
     return (
       <div>
         <ListContainer count={4} />
-        <Button text="mutate" />
+        <CommentButton />
       </div>
     )
   }
